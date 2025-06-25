@@ -1,8 +1,10 @@
-
+import time
 
 A = list(map(int, input().split()))
 
 n = len(A)
+
+st = time.process_time()
 
 def checkoutMax(a, lastIndex=0):
     # Locate the position of max item
@@ -22,6 +24,9 @@ for i in range(n-1, -1, -1):
     A[i] = checkoutMax(A, i)
     
 print(A)
+
+et = time.process_time()
+print(et-st)
 
 
 

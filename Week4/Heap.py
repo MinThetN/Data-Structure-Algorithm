@@ -6,6 +6,8 @@ The compare function takes two items:
   - returns False otherwise
 The function is to be passed to the heap instantiation
 '''
+import time
+import sys
 
 class heap:
     def compare(x, y):  # a default compare function for min heap
@@ -56,38 +58,32 @@ class heap:
             self.heapify(i)
             
     def __init__(self, items=[], cmp=compare):
-        self.a = items
+        self.a = items.copy()
         self.cmp = cmp
         self.heapsize = len(self.a)
         if len(self.a) > 0:
             self.buildHeap()
 
-
-
-'''
-# Example class definition for heap's element and test code
-
-def myCompare(x, y):   # max heap
-    return x.key > y.key
-
-class myClass:
-    def __init__(self, k):
-        self.key = k
-
-
-testList = [i+100 for i in range(10)]
-
-pq1 = heap(items=testList)   # default as min heap for a list of numbers
-pq2 = heap(cmp=myCompare)  # custom class item with custom compare function
-
-for v in testList:
-    pq2.insert(myClass(v))
-
-while not pq1.empty():
-    print(pq1.extract(), end=' ')
-print()
-
-while not pq2.empty():
-    print(pq2.extract().key, end=' ')
-
-'''
+if __name__ == "__main__":
+    # Start timing
+    start_time = time.process_time()
+    
+    # Read input from stdin
+    input_line = sys.stdin.read().strip()
+    rope_lengths = list(map(int, input_line.split()))
+    
+    # Solve rope cutting problem
+    if len(rope_lengths) > 1:
+        min_heap = heap(items=rope_lengths)
+        total_cost = 0
+        
+        while not min_heap.empty() and min_heap.heapsize > 1:
+            rope1 = min_heap.extract()
+            rope2 = min_heap.extract()
+            cost = rope1 + rope2
+            total_cost += cost
+            min_heap.insert(cost)
+    
+    # End timing and print
+    end_time = time.process_time()
+    print(end_time - start_time)
